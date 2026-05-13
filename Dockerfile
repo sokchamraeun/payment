@@ -1,8 +1,8 @@
-FROM php:8.2-cli
+FROM php:8.4-cli
 
 WORKDIR /var/www
 
-# Install dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git curl unzip libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql
@@ -13,7 +13,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy project
 COPY . .
 
-# Install PHP dependencies
+# Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
 # Permissions
